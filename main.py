@@ -48,17 +48,17 @@ def processNames(artist_lists, names, option):
         index+=1
 
 def handleSearchPress():
-    genre = entry.get() # returns the text entered into the entry box
+    genre = variable.get() # returns the text entered into the entry box
 
-    if (genre == "avant-garde" or genre == "avant garde" or genre == "modernism" or genre == "modernist"):
+    if (genre == "Avant-garde"):
         option = avantGarde
         URL = "https://en.wikipedia.org/wiki/List_of_avant-garde_artists"
 
-    elif (genre == 'postmodernism' or genre == "contemporary" or genre == "postmodern"):
+    elif (genre == 'Postmodernism'):
         option = postmodern
         URL = "https://en.wikipedia.org/wiki/List_of_contemporary_artists"
     
-    elif (genre == "impressionism" or genre == "impressionist"):
+    elif (genre == "Impressionism"):
         option = impressionism
         URL = "https://en.wikipedia.org/wiki/Impressionism"
     
@@ -101,6 +101,8 @@ def handleSearchPress():
 
     lst = list(names) # allow for random.choice to be called
     name = random.choice(lst)
+    answer.pack()
+    answer_frame.pack(fill=tk.Y, expand=True, pady=(0, 10))
     answer["text"] = name
 
 
@@ -108,27 +110,30 @@ window = tk.Tk()
 window.title("Art Recommendation")
 window.config(bg="white")
 window.iconbitmap('heart.ico')
+window.geometry('300x300')
 
-
-button_frame = tk.Frame()
-greeting_frame = tk.Frame()
-entry_frame = tk.Frame()
-answer_frame = tk.Frame()
-greeting = tk.Label(text="Choose an art movement", master=greeting_frame, font=("Bookman", 15, 'bold'), bg="white", fg="#800000")
-entry = tk.Entry(master=entry_frame)
-button = tk.Button(text="Search", master=button_frame, command=handleSearchPress, font=("Bookman", 10), fg="#800000")
-answer = tk.Label(text="", master=answer_frame, bg="white") # need to update this with some text...
+button_frame = tk.Frame(bg="white")
+greeting_frame = tk.Frame(bg="white")
+entry_frame = tk.Frame(bg="white")
+answer_frame = tk.Frame(bg="white")
+greeting = tk.Label(text="Choose an art movement", master=greeting_frame, font=("Bookman", 15, 'bold'), bg="white", fg="black")
+variable = tk.StringVar(entry_frame)
+variable.set("Avant-garde")
+entry = tk.OptionMenu(entry_frame, variable, "Avant-garde", "Postmodernism", "Impressionism")
+entry.configure(font=("Bookman", 10))
+button = tk.Button(text="Search", master=button_frame, command=handleSearchPress, font=("Bookman", 10), fg="black")
+answer = tk.Label(text="", master=answer_frame, bg="white", font=("Bookman", 13, 'bold'), fg="#e75480")
 
 
 greeting.pack()
 entry.pack()
 button.pack()
-answer.pack()
 
-greeting_frame.pack(fill=tk.Y, expand=True, pady=20, padx=20)
-entry_frame.pack(fill=tk.Y, expand=True, padx=20, pady=(10, 5))
-button_frame.pack(fill=tk.Y, expand=True, pady=(0, 20))
-answer_frame.pack(fill=tk.Y, expand=True, pady=(0, 10))
+
+greeting_frame.pack(pady=20)
+entry_frame.pack(pady=(25,0))
+button_frame.pack(pady=(5,30))
+
 
 window.mainloop()
 
